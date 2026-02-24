@@ -1,0 +1,26 @@
+*{
+    box-sizing: border-box;
+    font-family: system-ui;
+
+}
+main,footer{
+    min-height: 20vh;
+}
+
+header{
+    border: 1px solid orange;
+}
+
+main{
+    min-height: 100vh;
+    border: 3px solid grey;
+    padding: 2%;
+}
+
+
+
+.product{
+    border: 1px solid black;
+    padding: 2%;
+}
+

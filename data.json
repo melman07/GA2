@@ -1,32 +1,38 @@
 [
-  {"id": 1, "name": "Aurora Lamp", "description": "Color-changing LED desk lamp with touch controls", "price": 29.99},
-  {"id": 2, "name": "Nimbus Chair", "description": "Ergonomic office chair with lumbar support", "price": 189.50},
-  {"id": 3, "name": "Pulse Headphones", "description": "Wireless noise-canceling over-ear headphones", "price": 129.00},
-  {"id": 4, "name": "EcoSip Bottle", "description": "Insulated stainless steel water bottle", "price": 24.75},
-  {"id": 5, "name": "Swift Mouse", "description": "Rechargeable wireless optical mouse", "price": 19.99},
-  {"id": 6, "name": "Nova Keyboard", "description": "Slim mechanical keyboard with RGB backlight", "price": 89.95},
-  {"id": 7, "name": "Terra Planter", "description": "Self-watering indoor plant pot", "price": 34.20},
-  {"id": 8, "name": "Glide Backpack", "description": "Water-resistant laptop backpack", "price": 59.99},
-  {"id": 9, "name": "Spark Speaker", "description": "Portable Bluetooth mini speaker", "price": 39.49},
-  {"id": 10, "name": "Orbit Charger", "description": "Fast wireless charging pad", "price": 27.30},
-  {"id": 11, "name": "ClearView Monitor", "description": "27-inch 4K UHD display", "price": 329.99},
-  {"id": 12, "name": "Breeze Fan", "description": "Quiet oscillating desk fan", "price": 22.10},
-  {"id": 13, "name": "Trail Shoes", "description": "Lightweight trail running shoes", "price": 94.60},
-  {"id": 14, "name": "Core Mat", "description": "Non-slip yoga exercise mat", "price": 31.25},
-  {"id": 15, "name": "Chef Knife", "description": "Professional stainless steel chef knife", "price": 48.80},
-  {"id": 16, "name": "BlendPro Mixer", "description": "High-speed countertop blender", "price": 119.40},
-  {"id": 17, "name": "Smart Plug", "description": "WiFi enabled smart power plug", "price": 16.95},
-  {"id": 18, "name": "Vision Webcam", "description": "1080p USB streaming webcam", "price": 54.00},
-  {"id": 19, "name": "Shield Case", "description": "Shockproof phone protective case", "price": 14.99},
-  {"id": 20, "name": "Lumen Bulb", "description": "Smart dimmable LED bulb", "price": 12.45},
-  {"id": 21, "name": "Travel Mug", "description": "Spill-proof insulated coffee mug", "price": 21.70},
-  {"id": 22, "name": "Desk Pad", "description": "Large felt desk writing pad", "price": 18.35},
-  {"id": 23, "name": "Fit Band", "description": "Activity and sleep tracking wristband", "price": 67.90},
-  {"id": 24, "name": "Snap Tripod", "description": "Compact adjustable camera tripod", "price": 26.60},
-  {"id": 25, "name": "Cable Hub", "description": "7-port USB-C data hub", "price": 44.15},
-  {"id": 26, "name": "Note Journal", "description": "Hardcover dotted notebook", "price": 13.20},
-  {"id": 27, "name": "Secure Drive", "description": "1TB encrypted external SSD", "price": 149.99},
-  {"id": 28, "name": "Game Controller", "description": "Wireless dual-vibration controller", "price": 58.55},
-  {"id": 29, "name": "Air Purifier", "description": "HEPA filter room air purifier", "price": 199.00},
-  {"id": 30, "name": "Sleep Mask", "description": "Memory foam blackout sleep mask", "price": 17.80}
+   {
+      "id": 25,
+      "name": "Cable Hub",
+      "description": "7-port USB-C data hub",
+      "price": 44.15
+   },
+   {
+      "id": 26,
+      "name": "Note Journal",
+      "description": "Hardcover dotted notebook",
+      "price": 13.2
+   },
+   {
+      "id": 27,
+      "name": "Secure Drive",
+      "description": "1TB encrypted external SSD",
+      "price": 149.99
+   },
+   {
+      "id": 28,
+      "name": "Game Controller",
+      "description": "Wireless dual-vibration controller",
+      "price": 58.55
+   },
+   {
+      "id": 29,
+      "name": "Air Purifier",
+      "description": "HEPA filter room air purifier",
+      "price": 199
+   },
+   {
+      "id": 30,
+      "name": "Sleep Mask",
+      "description": "Memory foam blackout sleep mask",
+      "price": 17.8
+   }
 ]

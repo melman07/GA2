@@ -19,8 +19,8 @@ app.get("/data", async(req, res)=>{
 
 app.delete("/data/:id", async(req, res)=>{
     const id = req.params.id
-    const product = await getData("db.json");
-    const products = product.find(p=>p.id==id);
+    const products = await getData("data.json");
+    const product = products.find(p=>p.id==id);
 
     if(!product) return res.status(404).json({success: false, message: "Product not found"});
 

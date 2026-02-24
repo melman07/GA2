@@ -1,11 +1,17 @@
-ReactDOM.createRoot(document.querySelector("#app")).render(<App />)
+ReactDOM.createRoot(document.querySelector("#app")).render(<App></App>)
 
 function App(){
+
+    const [prods,setProds] = React.useState([])
 
     return(
         <>
         <Header></Header>
-        <Products></Products>
+        <main>
+            <CreateProduct></CreateProduct>
+            <Products prods = {prods} setProds = {setProds}></Products>
+        </main>
+        
         
         </>
     )
@@ -23,18 +29,31 @@ function Header(){
 };
 
 
-function ProductCard({prod}){
+function CreateProduct(){
 
-    function delProd(){
-        setProds(prev=>prev.filter(p=>p.id!=id));
+    
+}
+
+
+function ProductCard({product, setProds}){
+
+    async function delProd(){
+        
+        const res = await fetch("/data/"+product.id,{
+            method: "DELETE"
+        });
+
+        if(res.status == 200)
+            setProds(prev=> prev.filter(p=>p.id!=product.id));
+
     }
 
 
     return(
-        <div>
+        <div className="product" >
 
-            <h3>{prod.name}</h3>
-            <p>{prod.description}</p>
+            <h3>{product.name}</h3>
+            <p>{product.description}</p>
             <button onClick={delProd}>Delete</button>
 
 
@@ -42,10 +61,10 @@ function ProductCard({prod}){
     )
 }
 
-function Products(){
+function Products({prods,setProds}){
 
     
-    const [prods,setProds] = React.useState([])
+    
 
     React.useEffect(()=>{
             getProds();
@@ -63,7 +82,7 @@ function Products(){
         <div id = "products" className="content">
             <h1>PRODUCTS</h1>
 
-            {prods.map(p=> <ProductCard prod={p} key={p.id}></ProductCard>)}
+            {prods.map(p=> (<ProductCard setProds = {setProds} product={p} key={p.id}></ProductCard>))}
         </div>
     )
-};
+}
