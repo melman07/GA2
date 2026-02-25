@@ -8,7 +8,7 @@ function App(){
         <>
         <Header></Header>
         <main>
-            <CreateProduct></CreateProduct>
+            <CreateProduct setProds = {setProds}></CreateProduct>
             <Products prods = {prods} setProds = {setProds}></Products>
         </main>
         
@@ -29,8 +29,44 @@ function Header(){
 };
 
 
-function CreateProduct(){
+function CreateProduct({setProds}){
 
+    async function saveProduct(event){
+        event.preventDefault();
+
+        const product = {
+            name:event.target.name.value,
+            description:event.target.description.value,
+            price:event.target.price.value
+        }
+        
+        const res = await fetch("/data", {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(product)
+        })
+        
+        const data = await res.json();
+        console.log("status", res.status, data.message);
+        /* if(data.error) return */
+        if(res.ok)
+            setProds(prev=>[...prev, data])
+
+        
+
+        
+    }
+
+    return(
+        <div className="create">
+            <form onSubmit={saveProduct} action="/data" method="post">
+                <input type="text" name="name" placeholder="Name"/>
+                <input type="text" name="description" placeholder="Description"/>
+                <input type="text" name="price" placeholder="Price" />
+                <input type="submit" value="Save" />
+            </form>
+        </div>
+    )
     
 }
 
@@ -43,7 +79,7 @@ function ProductCard({product, setProds}){
             method: "DELETE"
         });
 
-        if(res.status == 200)
+        if(res.ok)
             setProds(prev=> prev.filter(p=>p.id!=product.id));
 
     }

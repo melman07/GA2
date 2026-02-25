@@ -15,7 +15,32 @@ app.get("/data", async(req, res)=>{
     res.json(await getData("data.json"))
 })
 
+app.post("/data", async(req,res)=>{
 
+    const product = {}
+
+    
+
+    if(!req.body.name)
+        return res.status(400).json({success: false, message: "Name is required"});
+    product.id = "id_2";
+
+    const allProducts = await getData("data.json");
+    const idExists = allProducts.some(p => p.id === product.id);
+
+    if (allProducts.some(p => String(p.id) === String(product.id)))
+        return res.status(400).json({success: false, message: "Product ID already exists"});
+
+    product.name = req.body.name || "no_name"
+    product.description = req.body.description || "no_description"
+    product.price = req.body.price || "no_price"
+
+    allProducts.push(product);
+    await saveData(allProducts, "data.json");
+
+    res.status(201).json(product);
+    
+})
 
 app.delete("/data/:id", async(req, res)=>{
     const id = req.params.id
