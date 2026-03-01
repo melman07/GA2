@@ -1,158 +1,38 @@
 [
    {
-      "id": 27,
-      "name": "Secure Drive",
-      "description": "1TB encrypted external SSD",
-      "price": 149.99
-   },
-   {
-      "id": 28,
-      "name": "Game Controller",
-      "description": "Wireless dual-vibration controller",
-      "price": 58.55
-   },
-   {
-      "id": 29,
-      "name": "Air Purifier",
-      "description": "HEPA filter room air purifier",
-      "price": 199
-   },
-   {
-      "id": 30,
-      "name": "Sleep Mask",
-      "description": "Memory foam blackout sleep mask",
-      "price": 17.8
-   },
-   {
-      "id": "id_1772026756415",
-      "name": "dsad",
-      "description": "dsad",
-      "price": "23"
-   },
-   {
-      "id": "id_1772026761567",
-      "name": "dsad",
-      "description": "dsad",
-      "price": "23"
-   },
-   {
-      "id": "id_1772026995429",
-      "name": "sad",
-      "description": "asdas",
-      "price": "12"
-   },
-   {
-      "id": "id_1772027012164",
-      "name": "data",
-      "description": "sdd",
-      "price": "12"
-   },
-   {
-      "id": "id_1772033532304",
-      "name": "no_name",
+      "id": "id_1772314963642",
+      "name": "k",
       "description": "no_description",
       "price": "no_price"
    },
    {
-      "id": "id_1772033641494",
-      "name": "no_name",
+      "id": "id_1772314966733",
+      "name": "k",
       "description": "no_description",
       "price": "no_price"
    },
    {
-      "id": "id_1772033693343",
-      "name": "dasd",
-      "description": "sada",
-      "price": "21"
-   },
-   {
-      "id": "id_1772033700024",
-      "name": "dasdsdsdd",
-      "description": "sadaasd",
-      "price": "21"
-   },
-   {
-      "id": "id_1772033700226",
-      "name": "dasdsdsdd",
-      "description": "sadaasd",
-      "price": "21"
-   },
-   {
-      "id": "id_1772033700400",
-      "name": "dasdsdsdd",
-      "description": "sadaasd",
-      "price": "21"
-   },
-   {
-      "id": "id_1772036599319",
-      "name": "dasd",
-      "description": "asdasa",
-      "price": "sdas"
-   },
-   {
-      "id": "id_1",
+      "id": "id_1772314985905",
       "name": "d",
       "description": "no_description",
       "price": "no_price"
    },
    {
-      "id": "id_1772036646269",
+      "id": "id_1772314988417",
       "name": "d",
       "description": "no_description",
       "price": "no_price"
    },
    {
-      "id": "id_1772036646718",
-      "name": "d",
+      "id": "id_1772323268018",
+      "name": "user1thing",
       "description": "no_description",
       "price": "no_price"
    },
    {
-      "id": "id_1772036650384",
-      "name": "d",
+      "id": "id_1772323272923",
+      "name": "user1thing",
       "description": "no_description",
       "price": "no_price"
-   },
-   {
-      "id": "id_1772036651048",
-      "name": "d",
-      "description": "no_description",
-      "price": "no_price"
-   },
-   {
-      "id": "id_1772036651669",
-      "name": "d",
-      "description": "no_description",
-      "price": "no_price"
-   },
-   {
-      "id": "id_1772036651834",
-      "name": "d",
-      "description": "no_description",
-      "price": "no_price"
-   },
-   {
-      "id": "id_1772037204187",
-      "name": "dsad",
-      "description": "sadas",
-      "price": "asdasd"
-   },
-   {
-      "id": "id_1772037204723",
-      "name": "dsad",
-      "description": "sadas",
-      "price": "asdasd"
-   },
-   {
-      "id": "id_1772037204895",
-      "name": "dsad",
-      "description": "sadas",
-      "price": "asdasd"
-   },
-   {
-      "id": "id_2",
-      "name": "dasd",
-      "description": "dasda",
-      "price": "12312"
    }
 ]

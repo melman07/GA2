@@ -1,6 +1,7 @@
 const express = require("express");
-const {getData, saveData} = require("./functions")
+const {getData, saveData, auth} = require("./functions")
 const app = express();
+const session = require("express-session")
 const port = process.env.port || 3000;
 app.listen(port, () => {
     console.log("Server running on http://localhost:" + port);
@@ -9,6 +10,12 @@ app.listen(port, () => {
 app.use(express.json());
 app.use(express.static("public"));
 
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}));
 
 
 app.get("/data", async(req, res)=>{
@@ -23,7 +30,7 @@ app.post("/data", async(req,res)=>{
 
     if(!req.body.name)
         return res.status(400).json({success: false, message: "Name is required"});
-    product.id = "id_2";
+    product.id = "id_"+Date.now();
 
     const allProducts = await getData("data.json");
     const idExists = allProducts.some(p => p.id === product.id);
@@ -38,7 +45,23 @@ app.post("/data", async(req,res)=>{
     allProducts.push(product);
     await saveData(allProducts, "data.json");
 
-    res.status(201).json(product);
+    res.status(201).json({product,success: true, message: "product created"});
+
+})
+
+app.patch("/data/:id", async(req,res)=>{
+    const id = req.params.id
+    const products = await getData("data.json");
+    const uProd = products.find(p=>p.id == id);
+    if(!uProd) return res.status(404).json({success: false, message: "Product not found"});
+
+    uProd.name = req.body.name || uProd.name;
+    uProd.description = req.body.description || uProd.description;
+    uProd.price = req.body.price || uProd.price;
+
+    await saveData(products, "data.json");
+
+    res.status(200).json({products,success: true, message: "product updated"});
     
 })
 

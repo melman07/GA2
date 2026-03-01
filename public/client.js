@@ -10,6 +10,7 @@ function App(){
         <main>
             <CreateProduct setProds = {setProds}></CreateProduct>
             <Products prods = {prods} setProds = {setProds}></Products>
+            
         </main>
         
         
@@ -27,6 +28,7 @@ function Header(){
         </header>
     )
 };
+
 
 
 function CreateProduct({setProds}){
@@ -50,7 +52,8 @@ function CreateProduct({setProds}){
         console.log("status", res.status, data.message);
         /* if(data.error) return */
         if(res.ok)
-            setProds(prev=>[...prev, data])
+            setProds(prev=>[...prev, data.product])
+        
 
         
 
@@ -87,12 +90,64 @@ function ProductCard({product, setProds}){
 
     return(
         <div className="product" >
+            <div className="container1">
+                <h3>{product.name}</h3>
+                <h4>{product.price}</h4>
+                <p>{product.description}</p>
+                <button onClick={delProd}>Delete</button>
+            </div>
+            <div className="container1">
+                <EditProduct product = {product} setProds={setProds}></EditProduct>
+            </div>
 
-            <h3>{product.name}</h3>
-            <p>{product.description}</p>
-            <button onClick={delProd}>Delete</button>
 
+        </div>
+    )
+}
 
+function EditProduct({product, setProds}){
+
+    async function EditProdFunc(event){
+
+        event.preventDefault();
+
+        const updatedProduct = {
+            name: event.target.name.value || product.name,
+            description: event.target.description.value || product.description,
+            price: event.target.price.value || product.price
+        };
+
+        const res = await fetch("/data/"+product.id,{
+            method: "PATCH",
+            headers: {"Content-Type":"application/json"},
+            body: JSON.stringify(updatedProduct)
+
+        });
+
+        const data = await res.json();
+
+        console.log("status", res.status, data.message);
+        if(res.ok){
+            setProds(prev=>
+                prev.map(p=>
+                    p.id===product.id?{...p, ...updatedProduct}: p
+                )
+            );
+        
+
+        }
+    }
+
+    return(
+        <div className="EditDiv">
+
+            <form onSubmit={EditProdFunc}>
+                <input type="text" name="name" placeholder="Name"/>
+                <input type="text" name="description" placeholder="Description"/>
+                <input type="text" name="price" placeholder="Price" />
+                <input type="submit" value="Save" />
+            </form>
+            
         </div>
     )
 }
