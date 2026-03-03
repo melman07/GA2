@@ -49,7 +49,7 @@ app.post("/data", async(req,res)=>{
 
 })
 
-app.patch("/data/:id", async(req,res)=>{
+app.put("/data/:id", async(req,res)=>{
     const id = req.params.id
     const products = await getData("data.json");
     const uProd = products.find(p=>p.id == id);

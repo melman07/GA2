@@ -1,27 +1,9 @@
 [
    {
-      "id": "id_1772314966733",
-      "name": "k",
-      "description": "no_description",
-      "price": "no_price"
-   },
-   {
-      "id": "id_1772314985905",
-      "name": "d",
-      "description": "no_description",
-      "price": "no_price"
-   },
-   {
-      "id": "id_1772314988417",
-      "name": "d",
-      "description": "no_description",
-      "price": "no_price"
-   },
-   {
       "id": "id_1772323268018",
       "name": "user1thing",
       "description": "no_description",
-      "price": "no_price"
+      "price": "12"
    },
    {
       "id": "id_1772323272923",

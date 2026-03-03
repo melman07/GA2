@@ -76,6 +76,12 @@ function CreateProduct({setProds}){
 
 function ProductCard({product, setProds}){
 
+    const [edit, setEdit] = React.useState(false)
+
+    function toggleEdit(){
+        setEdit(prev=>!prev)
+    }
+
     async function delProd(){
         
         const res = await fetch("/data/"+product.id,{
@@ -95,9 +101,11 @@ function ProductCard({product, setProds}){
                 <h4>{product.price}</h4>
                 <p>{product.description}</p>
                 <button onClick={delProd}>Delete</button>
+                <button onClick={toggleEdit}>Edit</button> 
             </div>
             <div className="container1">
-                <EditProduct product = {product} setProds={setProds}></EditProduct>
+                {edit ? <EditProduct product = {product} setProds={setProds}></EditProduct> : ""}
+                
             </div>
 
 
@@ -118,7 +126,7 @@ function EditProduct({product, setProds}){
         };
 
         const res = await fetch("/data/"+product.id,{
-            method: "PATCH",
+            method: "PUT",
             headers: {"Content-Type":"application/json"},
             body: JSON.stringify(updatedProduct)
 
@@ -130,7 +138,7 @@ function EditProduct({product, setProds}){
         if(res.ok){
             setProds(prev=>
                 prev.map(p=>
-                    p.id===product.id?{...p, ...updatedProduct}: p
+                    p.id==product.id?{...p, ...updatedProduct}: p
                 )
             );
         
