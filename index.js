@@ -1,7 +1,9 @@
 const express = require("express");
 const {getData, saveData, auth} = require("./functions")
-const app = express();
 const session = require("express-session")
+const bcypt = require("bcryptjs")
+const app = express();
+
 const port = process.env.port || 3000;
 app.listen(port, () => {
     console.log("Server running on http://localhost:" + port);
@@ -33,9 +35,9 @@ app.post("/data", async(req,res)=>{
     product.id = "id_"+Date.now();
 
     const allProducts = await getData("data.json");
-    const idExists = allProducts.some(p => p.id === product.id);
+    const idExists = allProducts.some(p => p.id == product.id);
 
-    if (allProducts.some(p => String(p.id) === String(product.id)))
+    if (allProducts.some(p => String(p.id) == String(product.id)))
         return res.status(400).json({success: false, message: "Product ID already exists"});
 
     product.name = req.body.name || "no_name"
@@ -78,4 +80,26 @@ app.delete("/data/:id", async(req, res)=>{
     res.json({success: true, message: "Product deleted"});
 
     /* res.json(await getData("data.json")) */
+});
+
+app.post("/register", async(req,res)=>{
+
+    const username = req.body.username
+    const password = req.body.password
+
+    if(!username || !password)
+        return res.status(400).json({success: false, message:  "Username and password required"});
+
+    const users = await getData("users.json");
+
+    if(users.find(u=>u.username==username))
+        return res.status(400).json({success: false, message: "Username already exists"});
+
+    const hashedPassword = await bcypt.hash(password, 12);
+
+    const user = {userid: "user_"+Date.now(), username: username, password: hashedPassword}
+    users.push(user);
+    await saveData(users, "users.json");
+
+    res.status(201).json({success: true, message: "User registered"});
 });
