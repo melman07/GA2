@@ -8,6 +8,7 @@ function App(){
         <>
         <Header></Header>
         <main>
+            <Loginuser></Loginuser>
             <CreateProduct setProds = {setProds}></CreateProduct>
             <Products prods = {prods} setProds = {setProds}></Products>
             
@@ -29,17 +30,32 @@ function Header(){
     )
 };
 
-function Login(){
+
+
+function Loginuser(){
+
+    function login(){
+
+
+
+    }
 
     return(
 
         <div>
 
+            <form action="/login"onSubmit={login} method="post">
+                <input type="text" name="email" placeholder="Email" />
+                <input type="text" name="password" placeholder="Password" />
+                <input type="submit" value="login" />
+
+            </form>
             
         </div>
 
     )
 }
+
 
 
 

@@ -103,3 +103,26 @@ app.post("/register", async(req,res)=>{
 
     res.status(201).json({success: true, message: "User registered"});
 });
+
+
+app.post("/login", async(req,res)=>{
+
+    const email = req.body.email;
+    const password = req.body.password;
+
+    if(!email || !password)
+        return res.status(400).json({success: false, message: "Email and password required"});
+
+    const users = await getData("users.json");
+    const user = users.find(u => u.email == email);
+
+    if(!user)
+        return res.status(401).json({success: false, message: "Invalid email or password"});
+
+    if(user.password != password)
+        return res.status(401).json({success: false, message: "Invalid email or password"});
+
+    res.status(200).json({user,success: true, message: "Login success"})
+
+
+});
