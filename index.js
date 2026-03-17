@@ -3,13 +3,25 @@ const {getData, saveData, auth} = require("./functions")
 const session = require("express-session")
 const bcypt = require("bcryptjs")
 const app = express();
+const escape = require("escape-html")
 
 const port = process.env.port || 3000;
 app.listen(port, () => {
     console.log("Server running on http://localhost:" + port);
 });
 
+
+// parse eventuell body som kommer i json-format
 app.use(express.json());
+
+
+// Denna behöver vi för att testa utan react...
+// parse eventuell body som kommer i url-encoded-format
+app.use(express.urlencoded({extended:true}));
+
+
+
+
 app.use(express.static("public"));
 
 app.use(session({
@@ -101,8 +113,10 @@ app.post("/register", async(req,res)=>{
     users.push(user);
     await saveData(users, "users.json");
 
-    res.status(201).json({success: true, message: "User registered"});
+    res.status(201).json({user,success: true, message: "User registered"});
 });
+
+
 
 
 app.post("/login", async(req,res)=>{
@@ -122,7 +136,10 @@ app.post("/login", async(req,res)=>{
     if(user.password != password)
         return res.status(401).json({success: false, message: "Invalid email or password"});
 
+    
+    req.session.auth = true;
+    req.session.uid = user.id;
+
     res.status(200).json({user,success: true, message: "Login success"})
-
-
+    console.log(user)
 });

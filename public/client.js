@@ -33,10 +33,37 @@ function Header(){
 
 
 function Loginuser(){
+    const [message, setMessage] = React.useState("");
 
-    function login(){
+    async function login(event){
 
 
+        event.preventDefault();
+
+        const user = {
+
+            email:event.target.email.value,
+            password:event.target.password.value
+
+        };
+
+        const res = await fetch("/login", {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(user)
+        })
+        
+        const data = await res.json();
+        if(!res.ok){
+            setMessage(data.message || "Login failed");
+            return
+        }
+
+        setMessage("Login successful!");
+        console.log("loggin in user",data.user);
+        /* if(res.ok){
+            
+        } */
 
     }
 
@@ -44,12 +71,13 @@ function Loginuser(){
 
         <div>
 
-            <form action="/login"onSubmit={login} method="post">
+            <form action="/login" onSubmit={login} method="post">
                 <input type="text" name="email" placeholder="Email" />
                 <input type="text" name="password" placeholder="Password" />
                 <input type="submit" value="login" />
 
             </form>
+            {message && <p>{message}</p>}
             
         </div>
 
