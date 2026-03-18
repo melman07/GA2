@@ -11,6 +11,7 @@ function App(){
             <Loginuser></Loginuser>
             <CreateProduct setProds = {setProds}></CreateProduct>
             <Products prods = {prods} setProds = {setProds}></Products>
+            <Register></Register>
             
         </main>
         
@@ -29,6 +30,55 @@ function Header(){
         </header>
     )
 };
+
+function Register(){
+ 
+    const [message, setMessage] = React.useState(""); //skapar ett medddelande under
+    async function saveAccount(event){
+ 
+        event.preventDefault(); //stoppar webbsidan från att reload
+ 
+ 
+        const account = {
+            email: event.target.email.value,
+            password: event.target.password.value
+        };
+ 
+ 
+        const res = await fetch("/register", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(account)
+        });
+ 
+ 
+        const data = await res.json();
+ 
+ 
+        if (!data.success) {
+            setMessage(data.error || "Registration failed");
+            return;
+        }
+       
+        setMessage("Registration successful.");
+        event.target.email.value = "";
+        event.target.password.value = "";
+    }
+ 
+    return(
+ 
+        <div id="register" className="content">
+            <h2>Register</h2>
+            <h3 className="errorMessage">{message}</h3>
+            <form onSubmit={saveAccount}>
+                <input type="text" name="email" placeholder="Email" required />
+                <input type="password" name="password" placeholder="Password" required />
+                <button type="submit">Create Account</button>
+            </form>
+           
+        </div>
+    )
+}
 
 
 
@@ -60,7 +110,7 @@ function Loginuser(){
         }
 
         setMessage("Login successful!");
-        console.log("loggin in user",data.user);
+        console.log("loggin in user",data.user.userid);
         /* if(res.ok){
             
         } */

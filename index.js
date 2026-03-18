@@ -1,7 +1,7 @@
 const express = require("express");
 const {getData, saveData, auth} = require("./functions")
 const session = require("express-session")
-const bcypt = require("bcryptjs")
+const bcrypt = require("bcryptjs")
 const app = express();
 const escape = require("escape-html")
 
@@ -47,7 +47,7 @@ app.post("/data", async(req,res)=>{
     product.id = "id_"+Date.now();
 
     const allProducts = await getData("data.json");
-    const idExists = allProducts.some(p => p.id == product.id);
+    /* const idExists = allProducts.some(p => p.id == product.id); */
 
     if (allProducts.some(p => String(p.id) == String(product.id)))
         return res.status(400).json({success: false, message: "Product ID already exists"});
@@ -96,20 +96,20 @@ app.delete("/data/:id", async(req, res)=>{
 
 app.post("/register", async(req,res)=>{
 
-    const username = req.body.username
+    const email = req.body.email
     const password = req.body.password
 
-    if(!username || !password)
-        return res.status(400).json({success: false, message:  "Username and password required"});
+    if(!email || !password)
+        return res.status(400).json({success: false, message:  "email and password required"});
 
     const users = await getData("users.json");
 
-    if(users.find(u=>u.username==username))
-        return res.status(400).json({success: false, message: "Username already exists"});
+    if(users.find(u=>u.email==email))
+        return res.status(400).json({success: false, message: "email already exists"});
 
-    const hashedPassword = await bcypt.hash(password, 12);
+    const hashedPassword = await bcrypt.hash(password, 12);
 
-    const user = {userid: "user_"+Date.now(), username: username, password: hashedPassword}
+    const user = {userid: "user_"+Date.now(), email: email.trim(), password: hashedPassword.trim()}
     users.push(user);
     await saveData(users, "users.json");
 
@@ -124,8 +124,12 @@ app.post("/login", async(req,res)=>{
     const email = req.body.email;
     const password = req.body.password;
 
+    
+
     if(!email || !password)
         return res.status(400).json({success: false, message: "Email and password required"});
+
+    
 
     const users = await getData("users.json");
     const user = users.find(u => u.email == email);
@@ -133,12 +137,14 @@ app.post("/login", async(req,res)=>{
     if(!user)
         return res.status(401).json({success: false, message: "Invalid email or password"});
 
-    if(user.password != password)
-        return res.status(401).json({success: false, message: "Invalid email or password"});
+    const hashedPassword = await bcrypt.compare(password, user.password);
+
+    if(!hashedPassword)
+        return res.status(401).json({success: false, message: "Invalid email or password"})
 
     
     req.session.auth = true;
-    req.session.uid = user.id;
+    req.session.uid = user.userid;
 
     res.status(200).json({user,success: true, message: "Login success"})
     console.log(user)
