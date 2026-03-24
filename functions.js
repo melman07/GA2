@@ -23,7 +23,19 @@ function auth(req,res,next){
         return res.status(401).json({success: false, message: "unauthorized"});
     }
     next();
+
+}
+
+async function owner(req,res,next){
+    const id = req.params.id
+
+    const products = await getData("data.json")
+    const product = products.find(p=>p.id==id);
+    if(!product)
+        return res.status(404).json({success:false,message:"Forbidden"});
+    next();
+
 }
 
 
-module.exports = {getData,saveData, auth}
+module.exports = {getData,saveData,auth,owner}

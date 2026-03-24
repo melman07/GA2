@@ -1,5 +1,5 @@
 const express = require("express");
-const {getData, saveData, auth} = require("./functions")
+const {getData, saveData, auth, owner} = require("./functions")
 const session = require("express-session")
 const bcrypt = require("bcryptjs")
 const app = express();
@@ -36,7 +36,7 @@ app.get("/data", async(req, res)=>{
     res.json(await getData("data.json"))
 })
 
-app.post("/data", async(req,res)=>{
+app.post("/data", auth, async(req,res)=>{
 
     const product = {}
 
@@ -63,7 +63,7 @@ app.post("/data", async(req,res)=>{
 
 })
 
-app.put("/data/:id", async(req,res)=>{
+app.put("/data/:id",auth,owner, async(req,res)=>{
     const id = req.params.id
     const products = await getData("data.json");
     const uProd = products.find(p=>p.id == id);
@@ -79,7 +79,7 @@ app.put("/data/:id", async(req,res)=>{
     
 })
 
-app.delete("/data/:id", async(req, res)=>{
+app.delete("/data/:id", auth,owner,async(req, res)=>{
     const id = req.params.id
     const products = await getData("data.json");
     const product = products.find(p=>p.id==id);
