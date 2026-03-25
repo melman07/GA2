@@ -1,32 +1,23 @@
 [
    {
-      "id": "id_1772323268018",
-      "name": "tuff",
-      "description": "wow",
-      "price": "5"
+      "id": "id_1774445523487",
+      "name": "nyuserthing",
+      "description": "sdasd",
+      "price": "123",
+      "owner": "user_1774445509740"
    },
    {
-      "id": "id_1772323272923",
-      "name": "user1thing",
-      "description": "no_description",
-      "price": "no_price"
+      "id": "id_1774446475219",
+      "name": "earpods",
+      "description": "thin",
+      "price": "123",
+      "owner": "user_1774446048934"
    },
    {
-      "id": "id_1772619823502",
-      "name": "test1",
-      "description": "des",
-      "price": "4"
-   },
-   {
-      "id": "id_1774350408847",
-      "name": "unath",
-      "description": "d",
-      "price": "21"
-   },
-   {
-      "id": "id_1774350449199",
-      "name": "unath2",
+      "id": "id_1774446784865",
+      "name": "melkersak",
       "description": "sadasd",
-      "price": "1232"
+      "price": "2135",
+      "owner": "user_1774444048292"
    }
 ]

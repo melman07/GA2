@@ -2,16 +2,48 @@ ReactDOM.createRoot(document.querySelector("#app")).render(<App></App>)
 
 function App(){
 
-    const [prods,setProds] = React.useState([])
+    const [prods,setProds] = React.useState([]);
+    const [user, setUser] = React.useState(null);
+
+
+    React.useEffect(()=> {
+        async function checkLogin() {
+            try {
+                const res = await fetch("/me");
+                const data = await res.json();
+
+                if(res.ok && data.loggedIn) {
+                    setUser(data.user);
+                }
+            } catch (err) {
+                console.error("Session check failed", err);
+            }
+            
+        }
+        checkLogin();
+    }, []);
+
+
 
     return(
         <>
-        <Header></Header>
+        <Header user={user} setUser={setUser}></Header>
         <main>
-            <Loginuser></Loginuser>
-            <CreateProduct setProds = {setProds}></CreateProduct>
-            <Products prods = {prods} setProds = {setProds}></Products>
-            <Register></Register>
+            {!user?(
+                <div>
+                <Loginuser setUser={setUser}></Loginuser>
+                <Register></Register>
+                </div>
+            ):(
+                <div>
+                <CreateProduct setProds = {setProds}></CreateProduct>
+                <Products prods = {prods} setProds = {setProds} user = {user}></Products>
+                </div>
+            )}
+            
+            
+            
+            
             
         </main>
         
@@ -20,12 +52,28 @@ function App(){
     )
 };
 
-function Header(){
+function Header({user,setUser}){
 
+    async function logout(){
+        try {
+            const res = await fetch("/logout", {method: "POST"});
+            const data = await res.json();
+            if(res.ok){
+                console.log(data.message)
+                setUser(null);
+                
+            } else{
+                console.error("Server logout failed", data.message);
+            }
+        } catch(error){
+            console.error("Logout error:", error);
+        }
+    }
     return(
         <header>
             <nav>
                 <a href="#home">HOME</a>
+                {user && <button onClick={logout}>logout</button>}
             </nav>
         </header>
     )
@@ -82,7 +130,7 @@ function Register(){
 
 
 
-function Loginuser(){
+function Loginuser({setUser}){
     const [message, setMessage] = React.useState("");
 
     async function login(event){
@@ -109,8 +157,12 @@ function Loginuser(){
             return
         }
 
+        setUser(data.user);
         setMessage("Login successful!");
         console.log("loggin in user",data.user.userid);
+
+        event.target.email.value = "";
+        event.target.password.value = "";
         /* if(res.ok){
             
         } */
@@ -122,8 +174,8 @@ function Loginuser(){
         <div>
 
             <form action="/login" onSubmit={login} method="post">
-                <input type="text" name="email" placeholder="Email" />
-                <input type="text" name="password" placeholder="Password" />
+                <input type="text" name="email" placeholder="Email" required/>
+                <input type="password" name="password" placeholder="Password" required/>
                 <input type="submit" value="login" />
 
             </form>
@@ -180,9 +232,12 @@ function CreateProduct({setProds}){
 }
 
 
-function ProductCard({product, setProds}){
+function ProductCard({product, setProds, user}){
 
     const [edit, setEdit] = React.useState(false)
+    const isOwner = user && product.owner == user.userid;
+
+    
 
     function toggleEdit(){
         setEdit(prev=>!prev)
@@ -206,11 +261,18 @@ function ProductCard({product, setProds}){
                 <h3>{product.name}</h3>
                 <h4>{product.price}</h4>
                 <p>{product.description}</p>
-                <button onClick={delProd}>Delete</button>
-                <button onClick={toggleEdit}>Edit</button> 
+                {isOwner && (
+                    <>
+                        <button onClick={delProd}>Delete</button>
+                        <button onClick={toggleEdit}>Edit</button>
+                    </>
+                )}
+                 
             </div>
             <div className="container1">
-                {edit ? <EditProduct product = {product} setProds={setProds}></EditProduct> : ""}
+                {edit && isOwner ? (
+                    <EditProduct product = {product} setProds={setProds} toggleEdit={toggleEdit}></EditProduct>
+                )  : ""}
                 
             </div>
 
@@ -219,7 +281,7 @@ function ProductCard({product, setProds}){
     )
 }
 
-function EditProduct({product, setProds}){
+function EditProduct({product, setProds, toggleEdit}){
 
     async function EditProdFunc(event){
 
@@ -247,6 +309,7 @@ function EditProduct({product, setProds}){
                     p.id==product.id?{...p, ...updatedProduct}: p
                 )
             );
+            toggleEdit();
         
 
         }
@@ -256,17 +319,17 @@ function EditProduct({product, setProds}){
         <div className="EditDiv">
 
             <form onSubmit={EditProdFunc}>
-                <input type="text" name="name" placeholder="Name"/>
-                <input type="text" name="description" placeholder="Description"/>
-                <input type="text" name="price" placeholder="Price" />
-                <input type="submit" value="Save" />
+                <input type="text" name="name" defaultValue={product.name} />
+                <input type="text" name="description" defaultValue={product.description} />
+                <input type="number" name="price" defaultValue={product.price} />
+                <input type="submit" value="Save"/>
             </form>
             
         </div>
     )
 }
 
-function Products({prods,setProds}){
+function Products({prods,setProds, user}){
 
     
     
@@ -287,7 +350,7 @@ function Products({prods,setProds}){
         <div id = "products" className="content">
             <h1>PRODUCTS</h1>
 
-            {prods.map(p=> (<ProductCard setProds = {setProds} product={p} key={p.id}></ProductCard>))}
+            {prods.map(p=> (<ProductCard setProds = {setProds} product={p} key={p.id} user={user}></ProductCard>))}
         </div>
     )
 }

@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs")
 const app = express();
 const escape = require("escape-html")
 
-const port = process.env.port || 3000;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log("Server running on http://localhost:" + port);
 });
@@ -55,6 +55,8 @@ app.post("/data", auth, async(req,res)=>{
     product.name = req.body.name || "no_name"
     product.description = req.body.description || "no_description"
     product.price = req.body.price || "no_price"
+    product.owner = req.session.uid
+    
 
     allProducts.push(product);
     await saveData(allProducts, "data.json");
@@ -113,7 +115,7 @@ app.post("/register", async(req,res)=>{
     users.push(user);
     await saveData(users, "users.json");
 
-    res.status(201).json({user,success: true, message: "User registered"});
+    res.status(201).json({success: true, message: "User registered"});
 });
 
 
@@ -146,6 +148,36 @@ app.post("/login", async(req,res)=>{
     req.session.auth = true;
     req.session.uid = user.userid;
 
-    res.status(200).json({user,success: true, message: "Login success"})
+    res.status(200).json({user: {userid: user.userid, email: user.email},success: true, message: "Login success"})
     console.log(user)
+});
+
+
+app.post("/logout", (req,res)=>{
+
+    req.session.destroy((err)=>{
+        if(err){
+            return res.status(500).json({ success:false, message: "Logout failed"});
+        }
+    res.clearCookie('connect.sid');
+    res.status(200).json({success:true,message:"Logout success"})
+
+    });
+})
+
+app.get("/me", async (req,res)=>{
+    if(!req.session.auth){
+        return res.status(401).json({loggedIn:false});
+    }
+
+    const users = await getData("users.json");
+    const user = users.find(u=>u.userid == req.session.uid);
+
+    if(!user){
+        return res.status(401).json({loggedIn: false});
+    }
+    res.json({
+        loggedIn: true,
+        user: {userid:user.userid, email:user.email}
+    });
 });
