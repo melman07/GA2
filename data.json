@@ -19,5 +19,12 @@
       "description": "sadasd",
       "price": "2135",
       "owner": "user_1774444048292"
+   },
+   {
+      "id": "id_1774447614444",
+      "name": "test-user1-uppdated",
+      "description": "no_description",
+      "price": "no_price",
+      "owner": "user_1774444048292"
    }
 ]
