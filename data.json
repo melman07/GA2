@@ -17,14 +17,42 @@
       "id": "id_1774446784865",
       "name": "melkersak",
       "description": "sadasd",
-      "price": "2135",
+      "price": "21355",
       "owner": "user_1774444048292"
    },
    {
-      "id": "id_1774447614444",
-      "name": "test-user1-uppdated",
+      "id": "id_1774455763069",
+      "name": "smör",
+      "description": "gott smör från Sverige",
+      "price": "1000",
+      "owner": "user_1774455704494"
+   },
+   {
+      "id": "id_1774455884275",
+      "name": "innterhtml=\"\"",
       "description": "no_description",
       "price": "no_price",
-      "owner": "user_1774444048292"
+      "owner": "user_1774455704494"
+   },
+   {
+      "id": "id_1774455885016",
+      "name": "innterhtml=\"\"",
+      "description": "no_description",
+      "price": "no_price",
+      "owner": "user_1774455704494"
+   },
+   {
+      "id": "id_1774455885349",
+      "name": "innterhtml=\"\"",
+      "description": "no_description",
+      "price": "no_price",
+      "owner": "user_1774455704494"
+   },
+   {
+      "id": "id_1774455885510",
+      "name": "innterhtml=\"\"",
+      "description": "no_description",
+      "price": "no_price",
+      "owner": "user_1774455704494"
    }
 ]

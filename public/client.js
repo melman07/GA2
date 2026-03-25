@@ -9,7 +9,10 @@ function App(){
     React.useEffect(()=> {
         async function checkLogin() {
             try {
-                const res = await fetch("/me");
+                const res = await fetch("/me", {
+                    method: "GET",
+                    credentials: "include"
+                });
                 const data = await res.json();
 
                 if(res.ok && data.loggedIn) {
@@ -56,7 +59,10 @@ function Header({user,setUser}){
 
     async function logout(){
         try {
-            const res = await fetch("/logout", {method: "POST"});
+            const res = await fetch("/logout", {
+                method: "POST",
+                credentials: "include"
+            });
             const data = await res.json();
             if(res.ok){
                 console.log(data.message)
@@ -203,7 +209,8 @@ function CreateProduct({setProds}){
         const res = await fetch("/data", {
             method:"POST",
             headers:{"Content-Type":"application/json"},
-            body:JSON.stringify(product)
+            body:JSON.stringify(product),
+            credentials: "include"
         })
         
         const data = await res.json();
@@ -246,7 +253,8 @@ function ProductCard({product, setProds, user}){
     async function delProd(){
         
         const res = await fetch("/data/"+product.id,{
-            method: "DELETE"
+            method: "DELETE",
+            credentials: "include"
         });
 
         if(res.ok)
@@ -296,7 +304,8 @@ function EditProduct({product, setProds, toggleEdit}){
         const res = await fetch("/data/"+product.id,{
             method: "PUT",
             headers: {"Content-Type":"application/json"},
-            body: JSON.stringify(updatedProduct)
+            body: JSON.stringify(updatedProduct),
+            credentials: "include"
 
         });
 

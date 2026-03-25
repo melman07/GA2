@@ -32,7 +32,7 @@ app.use(session({
 }));
 
 
-app.get("/data", async(req, res)=>{
+app.get("/data", auth, async(req, res)=>{
     res.json(await getData("data.json"))
 })
 

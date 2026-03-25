@@ -18,5 +18,20 @@
       "userid": "user_1774446048934",
       "email": "mrpefr@gmail.com",
       "password": "$2b$12$VUJ4wpSMy48bNN4ElVnAUeoKq15gDcyk.ORq2z/nwCKxAzZEn/BQC"
+   },
+   {
+      "userid": "user_1774455673748",
+      "email": "oooo",
+      "password": "$2b$12$nHIPOymq0HiMkInUBZvf8.NdmFAWEwaj7tdZuZJt2ax0WRp0dFE9C"
+   },
+   {
+      "userid": "user_1774455704494",
+      "email": "test",
+      "password": "$2b$12$uzPkSJELCRN8hah.XXGd9eFWKaB1UXMIfqaVwWfRR7G7AIVcjNUZe"
+   },
+   {
+      "userid": "user_1774456770087",
+      "email": "t",
+      "password": "$2b$12$lZvdjGwXofPpSKjuVAWlJe1y6r2cMdNoPKUF3qAKyWHsdJo8qeQ6K"
    }
 ]
