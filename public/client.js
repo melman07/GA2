@@ -154,8 +154,9 @@ function Loginuser({setUser}){
         const res = await fetch("/login", {
             method:"POST",
             headers:{"Content-Type":"application/json"},
-            body:JSON.stringify(user)
-        })
+            body:JSON.stringify(user),
+            credentials: "include"
+        });
         
         const data = await res.json();
         if(!res.ok){
@@ -179,7 +180,7 @@ function Loginuser({setUser}){
 
         <div>
 
-            <form action="/login" onSubmit={login} method="post">
+            <form onSubmit={login}>
                 <input type="text" name="email" placeholder="Email" required/>
                 <input type="password" name="password" placeholder="Password" required/>
                 <input type="submit" value="login" />
@@ -349,7 +350,9 @@ function Products({prods,setProds, user}){
 
     async function getProds() {
 
-        const res = await fetch("/data");
+        const res = await fetch("/data", {
+            credentials: "include"
+        });
         const data = await res.json();
         setProds(data)
         console.log(data);

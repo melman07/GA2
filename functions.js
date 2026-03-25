@@ -19,7 +19,7 @@ function saveData(data,fileName){
 };
 
 function auth(req,res,next){
-    if(!req.session.auth){
+    if(!req.session.user){
         return res.status(401).json({success: false, message: "unauthorized"});
     }
     next();
@@ -35,7 +35,7 @@ async function owner(req,res,next){
         return res.status(404).json({success:false,message:"Product not found"});
     }
         
-    if(product.owner != req.session.uid){
+    if(product.owner != req.session.user.userid){
         return res.status(403).json({success: false, message: "Forbidden: You dont own this product"});
     }
 
@@ -44,4 +44,27 @@ async function owner(req,res,next){
 }
 
 
-module.exports = {getData,saveData,auth,owner}
+
+async function logger(req,res,next){
+
+    const session = JSON.stringify(req.session.user) || "guest";
+
+    const timestamp = new Date().toISOString();
+    const method = req.method;
+    const url = req.originalUrl;
+    const userId = session.userId || session
+    const ip = req.ip;
+
+    console.log(`[${timestamp}] ${method} ${url} - User: ${userId} - IP: ${ip}`);
+
+    newLog = `[${timestamp}] ${method} ${url} - User: ${userId} - IP: ${ip}`
+
+    allLogs = await getData("logs.json")
+    allLogs.push(newLog)
+    await saveData(allLogs,"logs.json")
+
+
+    next();
+}
+
+module.exports = {getData,saveData,auth,owner, logger}

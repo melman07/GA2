@@ -1,9 +1,10 @@
 const express = require("express");
-const {getData, saveData, auth, owner} = require("./functions")
+const {getData, saveData, auth, owner, logger} = require("./functions")
 const session = require("express-session")
 const bcrypt = require("bcryptjs")
 const app = express();
-const escape = require("escape-html")
+
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
@@ -20,7 +21,12 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
 
+app.get("/logs", async (req,res)=>{
 
+    logs = await getData("logs.json")
+    console.log(logs)
+    res.send(logs)
+})
 
 app.use(express.static("public"));
 
@@ -31,9 +37,14 @@ app.use(session({
   cookie: { secure: false }
 }));
 
-
+app.use(logger)
 app.get("/data", auth, async(req, res)=>{
     res.json(await getData("data.json"))
+})
+
+app.get("/session", (req,res)=>{
+
+    res.send(req.session)
 })
 
 app.post("/data", auth, async(req,res)=>{
@@ -55,7 +66,7 @@ app.post("/data", auth, async(req,res)=>{
     product.name = req.body.name || "no_name"
     product.description = req.body.description || "no_description"
     product.price = req.body.price || "no_price"
-    product.owner = req.session.uid
+    product.owner = req.session.user.userid
     
 
     allProducts.push(product);
@@ -111,7 +122,7 @@ app.post("/register", async(req,res)=>{
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const user = {userid: "user_"+Date.now(), email: email.trim(), password: hashedPassword.trim()}
+    const user = {userid: "user_"+Date.now(), email: email.trim(), password: hashedPassword}
     users.push(user);
     await saveData(users, "users.json");
 
@@ -144,16 +155,17 @@ app.post("/login", async(req,res)=>{
     if(!hashedPassword)
         return res.status(401).json({success: false, message: "Invalid email or password"})
 
-    
-    req.session.auth = true;
-    req.session.uid = user.userid;
+    req.session.user = {
+        userid: user.userid,
+        email: user.email
+    }
 
-    res.status(200).json({user: {userid: user.userid, email: user.email},success: true, message: "Login success"})
+    res.status(200).json({user: req.session.user, success: true, message: "Login success"})
     console.log(user)
 });
 
 
-app.post("/logout", (req,res)=>{
+app.post("/logout", auth, (req,res)=>{
 
     req.session.destroy((err)=>{
         if(err){
@@ -166,18 +178,16 @@ app.post("/logout", (req,res)=>{
 })
 
 app.get("/me", async (req,res)=>{
-    if(!req.session.auth){
-        return res.status(401).json({loggedIn:false});
-    }
+   
 
-    const users = await getData("users.json");
-    const user = users.find(u=>u.userid == req.session.uid);
+/*     const users = await getData("users.json");
+    const user = users.find(u=>u.userid == req.session.userid); */
 
-    if(!user){
+    if(!req.session.user){
         return res.status(401).json({loggedIn: false});
     }
     res.json({
         loggedIn: true,
-        user: {userid:user.userid, email:user.email}
+        user: req.session.user
     });
 });
