@@ -46,25 +46,38 @@ async function owner(req,res,next){
 
 
 async function logger(req,res,next){
+    try{
 
-    const session = JSON.stringify(req.session.user) || "guest";
+    const userId = req.session.user ? req.session.user.userid : "guest";
 
     const timestamp = new Date().toISOString();
     const method = req.method;
     const url = req.originalUrl;
-    const userId = session.userId || session
     const ip = req.ip;
 
-    console.log(`[${timestamp}] ${method} ${url} - User: ${userId} - IP: ${ip}`);
+    
 
-    newLog = `[${timestamp}] ${method} ${url} - User: ${userId} - IP: ${ip}`
+    newLog = `${timestamp} ${method} ${url} - User: ${userId} - IP: ${ip}`
 
-    allLogs = await getData("logs.json")
-    allLogs.push(newLog)
-    await saveData(allLogs,"logs.json")
+    let allLogs = await getData("logs.json") || [];
 
+    allLogs.push(newLog);
+
+    if(allLogs.length > 200){
+        allLogs.splice(0,allLogs.length - 200);
+    }
+    await saveData(allLogs, "logs.json");
 
     next();
+    }
+
+    catch(err){
+        console.error("Logger error:", err);
+        next();
+
+    }
+
+    
 }
 
 module.exports = {getData,saveData,auth,owner, logger}

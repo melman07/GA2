@@ -65,9 +65,12 @@ app.post("/data", auth, async(req,res)=>{
 
     product.name = req.body.name || "no_name"
     product.description = req.body.description || "no_description"
-    product.price = req.body.price || "no_price"
+    product.price = Number(req.body.price) || "no_price"
     product.owner = req.session.user.userid
     
+    if(isNaN(product.price)|| product.price < 0){
+        return res.status(400).json({success:false,message:"Invalid price"});
+    };
 
     allProducts.push(product);
     await saveData(allProducts, "data.json");
@@ -134,7 +137,7 @@ app.post("/register", async(req,res)=>{
 
 app.post("/login", async(req,res)=>{
 
-    const email = req.body.email;
+    const email = req.body.email.trim();
     const password = req.body.password;
 
     

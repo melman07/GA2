@@ -85,6 +85,18 @@ function Header({user,setUser}){
     )
 };
 
+function Search(){
+
+    return(
+
+        <div className="Searchdiv">
+
+            
+
+        </div>
+    )
+}
+
 function Register(){
  
     const [message, setMessage] = React.useState(""); //skapar ett medddelande under
@@ -178,7 +190,8 @@ function Loginuser({setUser}){
 
     return(
 
-        <div>
+        <div id="login" className="content">
+            <h2>Login</h2>
 
             <form onSubmit={login}>
                 <input type="text" name="email" placeholder="Email" required/>
@@ -198,10 +211,19 @@ function Loginuser({setUser}){
 
 function CreateProduct({setProds}){
 
+    const [loading, setLoading] = React.useState(false);
+
     async function saveProduct(event){
         event.preventDefault();
 
-        const product = {
+        const confirm = window.confirm("Create this product?")
+        if(!confirm) return;
+        setLoading(true);
+        try{
+
+            
+
+            const product = {
             name:event.target.name.value,
             description:event.target.description.value,
             price:event.target.price.value
@@ -215,10 +237,24 @@ function CreateProduct({setProds}){
         })
         
         const data = await res.json();
-        console.log("status", res.status, data.message);
+       
         /* if(data.error) return */
         if(res.ok)
             setProds(prev=>[...prev, data.product])
+            event.target.reset();
+         console.log("status", res.status, data.message);
+
+        }
+
+        catch(err){
+            console.error("Failed to create product", err);
+        }
+
+        finally{
+
+            setLoading(false);
+        }
+        
         
 
         
@@ -252,14 +288,22 @@ function ProductCard({product, setProds, user}){
     }
 
     async function delProd(){
-        
+
+        const confirmed = window.confirm("Are you sure you want to delete this product?");
+        if(!confirmed) return;
         const res = await fetch("/data/"+product.id,{
             method: "DELETE",
             credentials: "include"
         });
 
+        
+        const data = await res.json();
+        
+
         if(res.ok)
             setProds(prev=> prev.filter(p=>p.id!=product.id));
+        
+        console.log("status", res.status, data.message)
 
     }
 
@@ -292,11 +336,18 @@ function ProductCard({product, setProds, user}){
 
 function EditProduct({product, setProds, toggleEdit}){
 
+    const [loading, setLoading] = React.useState(false);
+
     async function EditProdFunc(event){
 
         event.preventDefault();
 
-        const updatedProduct = {
+        const confirm = window.confirm("Save changes to this product?");
+        if(!confirm) return;
+        setLoading(true);
+        try{
+
+            const updatedProduct = {
             name: event.target.name.value || product.name,
             description: event.target.description.value || product.description,
             price: event.target.price.value || product.price
@@ -323,6 +374,14 @@ function EditProduct({product, setProds, toggleEdit}){
         
 
         }
+        }
+        catch(err){
+            console.error(err);
+        }
+        finally{
+            setLoading(false);
+        }
+        
     }
 
     return(
@@ -332,7 +391,7 @@ function EditProduct({product, setProds, toggleEdit}){
                 <input type="text" name="name" defaultValue={product.name} />
                 <input type="text" name="description" defaultValue={product.description} />
                 <input type="number" name="price" defaultValue={product.price} />
-                <input type="submit" value="Save"/>
+                <input type="submit" value={loading? "Saving...": "Save"} disabled={loading}/>
             </form>
             
         </div>
@@ -341,27 +400,41 @@ function EditProduct({product, setProds, toggleEdit}){
 
 function Products({prods,setProds, user}){
 
-    
+    const [loading,setLoading] = React.useState(false);
     
 
     React.useEffect(()=>{
             getProds();
-        },[])
+        },[user]) //kör getProds när user ändras (loggar in)
 
     async function getProds() {
 
-        const res = await fetch("/data", {
+        setLoading(true)
+
+        try{
+
+            const res = await fetch("/data", {
             credentials: "include"
         });
         const data = await res.json();
         setProds(data)
-        console.log(data);
+
+        }
+        catch(err){
+            console.error("Failed to fetch products", err);
+        }
+
+        finally{
+            setLoading(false);
+        }
+        
+        
     }
 
     return(
         <div id = "products" className="content">
             <h1>PRODUCTS</h1>
-
+            {loading && <p>Loading products...</p>}
             {prods.map(p=> (<ProductCard setProds = {setProds} product={p} key={p.id} user={user}></ProductCard>))}
         </div>
     )

@@ -1,1 +1,16 @@
-[]
+[
+   {
+      "id": "id_1774525050987",
+      "name": "test-user1-uppdated",
+      "description": "no_description",
+      "price": "2",
+      "owner": "user_1774458964087"
+   },
+   {
+      "id": "id_1774525260330",
+      "name": "test-user1-uppdated",
+      "description": "no_description",
+      "price": 2,
+      "owner": "user_1774458964087"
+   }
+]
