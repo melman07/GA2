@@ -1,16 +1,16 @@
 [
    {
-      "id": "id_1774525050987",
-      "name": "test-user1-uppdated",
+      "id": "id_1774549550468",
+      "name": "user1thing",
       "description": "no_description",
-      "price": "2",
+      "price": 323,
       "owner": "user_1774458964087"
    },
    {
-      "id": "id_1774525260330",
-      "name": "test-user1-uppdated",
-      "description": "no_description",
-      "price": 2,
+      "id": "id_1774561419098",
+      "name": "user1thing",
+      "description": "asdasdasd",
+      "price": 12312312,
       "owner": "user_1774458964087"
    }
 ]

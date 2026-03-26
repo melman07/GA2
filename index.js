@@ -181,10 +181,6 @@ app.post("/logout", auth, (req,res)=>{
 })
 
 app.get("/me", async (req,res)=>{
-   
-
-/*     const users = await getData("users.json");
-    const user = users.find(u=>u.userid == req.session.userid); */
 
     if(!req.session.user){
         return res.status(401).json({loggedIn: false});

@@ -85,17 +85,6 @@ function Header({user,setUser}){
     )
 };
 
-function Search(){
-
-    return(
-
-        <div className="Searchdiv">
-
-            
-
-        </div>
-    )
-}
 
 function Register(){
  
@@ -258,7 +247,7 @@ function CreateProduct({setProds}){
         
 
         
-
+ 
         
     }
 
@@ -267,7 +256,7 @@ function CreateProduct({setProds}){
             <form onSubmit={saveProduct} action="/data" method="post">
                 <input type="text" name="name" placeholder="Name"/>
                 <input type="text" name="description" placeholder="Description"/>
-                <input type="text" name="price" placeholder="Price" />
+                <input type="number" name="price" placeholder="Price" />
                 <input type="submit" value="Save" />
             </form>
         </div>
@@ -315,21 +304,17 @@ function ProductCard({product, setProds, user}){
                 <h4>{product.price}</h4>
                 <p>{product.description}</p>
                 {isOwner && (
-                    <>
+                    <div>
                         <button onClick={delProd}>Delete</button>
                         <button onClick={toggleEdit}>Edit</button>
-                    </>
-                )}
-                 
+                    </div>
+                )}   
             </div>
             <div className="container1">
                 {edit && isOwner ? (
                     <EditProduct product = {product} setProds={setProds} toggleEdit={toggleEdit}></EditProduct>
-                )  : ""}
-                
+                )  : ""}  
             </div>
-
-
         </div>
     )
 }
@@ -346,7 +331,6 @@ function EditProduct({product, setProds, toggleEdit}){
         if(!confirm) return;
         setLoading(true);
         try{
-
             const updatedProduct = {
             name: event.target.name.value || product.name,
             description: event.target.description.value || product.description,
@@ -358,7 +342,6 @@ function EditProduct({product, setProds, toggleEdit}){
             headers: {"Content-Type":"application/json"},
             body: JSON.stringify(updatedProduct),
             credentials: "include"
-
         });
 
         const data = await res.json();
@@ -371,8 +354,6 @@ function EditProduct({product, setProds, toggleEdit}){
                 )
             );
             toggleEdit();
-        
-
         }
         }
         catch(err){
@@ -386,14 +367,12 @@ function EditProduct({product, setProds, toggleEdit}){
 
     return(
         <div className="EditDiv">
-
             <form onSubmit={EditProdFunc}>
                 <input type="text" name="name" defaultValue={product.name} />
                 <input type="text" name="description" defaultValue={product.description} />
                 <input type="number" name="price" defaultValue={product.price} />
                 <input type="submit" value={loading? "Saving...": "Save"} disabled={loading}/>
             </form>
-            
         </div>
     )
 }
@@ -401,6 +380,7 @@ function EditProduct({product, setProds, toggleEdit}){
 function Products({prods,setProds, user}){
 
     const [loading,setLoading] = React.useState(false);
+    const [searchTerm, setSearchTerm] = React.useState("");
     
 
     React.useEffect(()=>{
@@ -427,15 +407,24 @@ function Products({prods,setProds, user}){
         finally{
             setLoading(false);
         }
-        
+    
         
     }
+    const filteredProducts = prods.filter(p =>
+        p.name.toLowerCase().includes(searchTerm.toLocaleLowerCase()) || 
+        p.description.toLowerCase().includes(searchTerm.toLocaleLowerCase())
+    );
 
     return(
         <div id = "products" className="content">
             <h1>PRODUCTS</h1>
-            {loading && <p>Loading products...</p>}
-            {prods.map(p=> (<ProductCard setProds = {setProds} product={p} key={p.id} user={user}></ProductCard>))}
+            
+            <input type="text" placeholder="Search products..." value={searchTerm} onChange={(e)=>setSearchTerm(e.target.value)}/>
+                {loading && <p>Loading products...</p>}
+                {filteredProducts.map(p=>(<ProductCard setProds = {setProds} product={p} key={p.id} user={user}></ProductCard>))}
+            
+            
+            
         </div>
     )
 }
