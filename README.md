@@ -421,7 +421,7 @@ function CreateProduct({setProds}){
         const data = await res.json();
 
         if(res.ok)
-            setProds(prev=>[...prev, data.product])
+            setProds(p=>[...p, data.product])
             event.target.reset();
          console.log("status", res.status, data.message);
 
@@ -442,9 +442,62 @@ function CreateProduct({setProds}){
                 <input type="text" name="name" placeholder="Name"/>
                 <input type="text" name="description" placeholder="Description"/>
                 <input type="number" name="price" placeholder="Price" />
-                <input type="submit" value="Save" />
+                <input type="submit" value={loading ? "Saving..." : "Save"} disabled={loading}/>
             </form>
         </div>
     )
 }
 ```
+loading usestate så man inte kan göra produkter när en redan görs. window.confirm blir false eller true beroende på vad usern väljer i konfarmationen. loading sets till true. product blir till värderna i formet. Skickar product till servern som skickar tillbaka en respons som är bra eller dålig samt produkten. Om responsen är ok så mappar den alla producter med den nya produkten i slutet. event.targer.reset() gör så inerhållet i formen försvinner. loading sets till false vilket gör att saving... slutas vissas och knappen funkar igen.
+
+```jsx
+function ProductCard({product, setProds, user}){
+    const [edit, setEdit] = React.useState(false)
+    const isOwner = user && product.owner == user.userid;
+
+    function toggleEdit(){
+        setEdit(prev=>!prev)
+    }
+
+    async function delProd(){
+
+        const confirmed = window.confirm("Are you sure you want to delete this product?");
+        if(!confirmed) return;
+        const res = await fetch("/data/"+product.id,{
+            method: "DELETE",
+            credentials: "include"
+        });
+
+        
+        const data = await res.json();
+        
+        if(res.ok)
+            setProds(prev=> prev.filter(p=>p.id!=product.id));
+        
+        console.log("status", res.status, data.message)
+    }
+
+
+    return(
+        <div className="product" >
+            <div className="container1">
+                <h3>{product.name}</h3>
+                <h4>{product.price}</h4>
+                <p>{product.description}</p>
+                {isOwner && (
+                    <div>
+                        <button onClick={delProd}>Delete</button>
+                        <button onClick={toggleEdit}>Edit</button>
+                    </div>
+                )}   
+            </div>
+            <div className="container1">
+                {edit && isOwner ? (
+                    <EditProduct product = {product} setProds={setProds} toggleEdit={toggleEdit}></EditProduct>
+                )  : ""}  
+            </div>
+        </div>
+    )
+}
+```
+isOwner blir true om både user är något och product.owner är samma som user.userid(båda måste stämma). 

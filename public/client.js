@@ -229,7 +229,7 @@ function CreateProduct({setProds}){
        
         /* if(data.error) return */
         if(res.ok)
-            setProds(prev=>[...prev, data.product])
+            setProds(p=>[...p, data.product])
             event.target.reset();
          console.log("status", res.status, data.message);
 
@@ -257,7 +257,7 @@ function CreateProduct({setProds}){
                 <input type="text" name="name" placeholder="Name"/>
                 <input type="text" name="description" placeholder="Description"/>
                 <input type="number" name="price" placeholder="Price" />
-                <input type="submit" value="Save" />
+                <input type="submit" value={loading ? "Saving..." : "Save"} disabled={loading}/>
             </form>
         </div>
     )
