@@ -38,6 +38,8 @@ app.use(session({
 }));
 
 app.use(logger)
+
+
 app.get("/data", auth, async(req, res)=>{
     res.json(await getData("data.json"))
 })
