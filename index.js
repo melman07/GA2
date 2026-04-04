@@ -4,22 +4,12 @@ const session = require("express-session")
 const bcrypt = require("bcryptjs")
 const app = express();
 
-
-
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log("Server running on http://localhost:" + port);
 });
-
-
 // parse eventuell body som kommer i json-format
 app.use(express.json());
-
-
-// Denna behöver vi för att testa utan react...
-// parse eventuell body som kommer i url-encoded-format
-app.use(express.urlencoded({extended:true}));
-
 
 app.get("/logs", async (req,res)=>{
 

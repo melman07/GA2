@@ -111,7 +111,7 @@ function Register(){
  
  
         if (!data.success) {
-            setMessage(data.error || "Registration failed");
+            setMessage(data.message || "Registration failed");
             return;
         }
        
@@ -392,7 +392,7 @@ function Products({prods,setProds, user}){
         setLoading(true)
 
         try{
-
+            /* await new Promise(resolve => setTimeout(resolve, 1500)); */
             const res = await fetch("/data", {
             credentials: "include"
         });

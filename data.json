@@ -7,13 +7,6 @@
       "owner": "user_1774871082766"
    },
    {
-      "id": "id_1775246301453",
-      "name": "user1thing",
-      "description": "213",
-      "price": "123123",
-      "owner": "user_1774458964087"
-   },
-   {
       "id": "id_1775246312700",
       "name": "new thung",
       "description": "1231",
@@ -60,6 +53,20 @@
       "name": "asdasas",
       "description": "dasda",
       "price": 121,
+      "owner": "user_1774458964087"
+   },
+   {
+      "id": "id_1775327218532",
+      "name": "asda",
+      "description": "asdasda",
+      "price": 345345345345,
+      "owner": "user_1774458964087"
+   },
+   {
+      "id": "id_1775332704668",
+      "name": "user1thingatratasrf",
+      "description": "asdatest1",
+      "price": "232",
       "owner": "user_1774458964087"
    }
 ]

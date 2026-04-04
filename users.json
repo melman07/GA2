@@ -18,5 +18,10 @@
       "userid": "user_1775232402188",
       "email": "melker2",
       "password": "$2b$12$Glcx5nJLzT5mo81HslIlqesWkN0LoUOhRqfLqB6yjdZlUh3hYcM8."
+   },
+   {
+      "userid": "user_1775339348344",
+      "email": "melker3",
+      "password": "$2b$12$D8MwBTdSWxISeFgDmw1BEeG9pfxhoX7aaT8W/MlL600fltOtDJWOG"
    }
 ]
