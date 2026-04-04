@@ -17,7 +17,6 @@ app.listen(port, () => {
 });
 
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
 ```
 Servern startar på port 3000 eller det som står i miljövariablen PORT
 ### Gör public foldern tillgänglig
