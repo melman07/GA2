@@ -23,7 +23,6 @@ Servern startar på port 3000 eller det som står i miljövariablen PORT
 ```js
 app.use(express.static("public"));
 ```
-
 ### Session
 ```js
 app.use(session({
@@ -33,7 +32,7 @@ app.use(session({
   cookie: { secure: false }
 }));
 ```
-
+Cookien kommer ha defualt namnet connect.sid
 ### Routes
 ```js
 app.use(logger)
@@ -134,7 +133,7 @@ app.post("/register", async(req,res)=>{
     res.status(201).json({success: true, message: "User registered"});
 });
 ```
-Register route. om email och/eller password inte finns så returnas felkåd. om emailen redans andvänds för ett konto returnas felkåd. Om allt går bra så kommer den usern pushas till users som savas till users.json. Lösernordet hashas med bcrypt
+Register route. om email och/eller password inte finns så returnas felkåd. om emailen redans andvänds för ett konto returnas felkåd. Om allt går bra så kommer den usern pushas till users som savas till users.json. Lösernordet hashas med bcrypt och en respons med success: true returneras.
 ```js
 app.post("/login", async(req,res)=>{
 
@@ -168,7 +167,7 @@ app.post("/login", async(req,res)=>{
     console.log(user)
 });
 ```
-Login route. Om email och/eller password inte skrivs. Om emailen eller lösernordet är fel så kommer felkåd returnas (säger inte om email är rätt för säkerhets skäll). Om allt går bra kommer en session skappas på servern och cookien kommer skickas till clienten.
+Login route. Om email och/eller password inte skrivs. Om emailen eller lösernordet är fel så kommer felkåd returnas (säger inte om email är rätt för säkerhets skäll). Om allt går bra kommer en session skappas på servern och cookien kommer skickas till clienten. Trim tar bort inledande och avslutande mellanrum.
 ```js
 app.post("/logout", auth, (req,res)=>{
 
@@ -702,3 +701,32 @@ async function logger(req,res,next){
 }
 ```
 Loggar allt som andvändare gör med ip, tid, urlen, method och userid for att spara vad olika users gjort. Dessa logs savas till logs.json. Om allLogs är längre än 200 så kommer den äldsta loggen raderas.
+
+***
+## Index
+```html
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+```
+Hämtar react biblioteket innerhåller all logik.
+
+```html
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+```
+Script som låter react renderas in i DOM (DOM är datastrukturen soom react/javascript ändrar)
+
+```html
+ <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+```
+Babel är som en översättare så att webbläsaren kan förstå react komponenter och översätter JSX till vanlig javaScript
+
+```html
+<script src="client.js" type="text/babel" defer></script>
+```
+Detta säger till webbläsaren att andvända babel för att kompilera och defer betyder att htmlen ska vara läst innan.
+
+```html
+<div id="app">
+
+</div>
+```
+Här hamnar allt i App
