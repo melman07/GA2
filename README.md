@@ -15,10 +15,12 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log("Server running on http://localhost:" + port);
 });
-
+```
+Servern startar på port 3000 eller det som står i miljövariablen PORT. Jag definierar expres, funktioner, session, bcrypt och app.
+```js
 app.use(express.json());
 ```
-Servern startar på port 3000 eller det som står i miljövariablen PORT
+Json middleware för att kunna skicka json till client.
 ### Gör public foldern tillgänglig
 ```js
 app.use(express.static("public"));

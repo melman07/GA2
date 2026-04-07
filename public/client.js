@@ -243,12 +243,6 @@ function CreateProduct({setProds}){
 
             setLoading(false);
         }
-        
-        
-
-        
- 
-        
     }
 
     return(
