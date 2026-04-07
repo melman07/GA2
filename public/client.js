@@ -263,6 +263,8 @@ function ProductCard({product, setProds, user}){
 
     const [edit, setEdit] = React.useState(false)
     const isOwner = user && product.owner == user.userid;
+    
+    
 
     
 
@@ -281,6 +283,8 @@ function ProductCard({product, setProds, user}){
 
         
         const data = await res.json();
+
+        
         
 
         if(res.ok)
@@ -289,7 +293,7 @@ function ProductCard({product, setProds, user}){
         console.log("status", res.status, data.message)
 
     }
-
+    
 
     return(
         <div className="product" >
@@ -297,6 +301,8 @@ function ProductCard({product, setProds, user}){
                 <h3>{product.name}</h3>
                 <h4>{product.price}</h4>
                 <p>{product.description}</p>
+                <h3>Owner: {isOwner? "Me":product.ownerName}</h3>
+                
                 {isOwner && (
                     <div>
                         <button onClick={delProd}>Delete</button>

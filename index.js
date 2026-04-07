@@ -59,6 +59,7 @@ app.post("/data", auth, async(req,res)=>{
     product.description = req.body.description || "no_description"
     product.price = Number(req.body.price) || "no_price"
     product.owner = req.session.user.userid
+    product.ownerName = req.session.user.email
     
     if(isNaN(product.price)|| product.price < 0){
         return res.status(400).json({success:false,message:"Invalid price"});

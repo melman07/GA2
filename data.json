@@ -4,7 +4,8 @@
       "name": "bustleksak",
       "description": "en leksak som får dig att busta",
       "price": "12",
-      "owner": "user_1774871082766"
+      "owner": "user_1774871082766",
+      "ownerName": "alva@bust.com"
    },
    {
       "id": "id_1775246312700",
@@ -68,5 +69,42 @@
       "description": "asdatest1",
       "price": "232",
       "owner": "user_1774458964087"
+   },
+   {
+      "id": "id_1775582372543",
+      "name": "user1thing",
+      "description": "dsad",
+      "price": "123",
+      "owner": "user_1774458964087"
+   },
+   {
+      "id": "id_1775582402481",
+      "name": "test",
+      "description": "dasd",
+      "price": 975,
+      "owner": "user_1774458964087"
+   },
+   {
+      "id": "id_1775582434333",
+      "name": "dasdsadasd",
+      "description": "dasda121312",
+      "price": 21312,
+      "owner": "user_1774458964087"
+   },
+   {
+      "id": "id_1775583356589",
+      "name": "melkertest",
+      "description": "213",
+      "price": 12312,
+      "owner": "user_1774458964087",
+      "ownerName": "melker"
+   },
+   {
+      "id": "id_1775583975077",
+      "name": "testr21",
+      "description": "31",
+      "price": 213123,
+      "owner": "user_1775232402188",
+      "ownerName": "melker2"
    }
 ]
