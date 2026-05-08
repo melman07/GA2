@@ -1,9 +1,4 @@
 [
-   "2026-04-04T20:06:00.776Z POST /logout - User: user_1774458964087 - IP: ::1",
-   "2026-04-04T20:06:02.353Z GET /.well-known/appspecific/com.chrome.devtools.json - User: guest - IP: ::1",
-   "2026-04-04T20:06:02.575Z GET /me - User: guest - IP: ::1",
-   "2026-04-04T20:13:00.022Z GET /.well-known/appspecific/com.chrome.devtools.json - User: guest - IP: ::1",
-   "2026-04-04T20:13:00.774Z GET /me - User: guest - IP: ::1",
    "2026-04-04T20:17:13.266Z GET /.well-known/appspecific/com.chrome.devtools.json - User: guest - IP: ::1",
    "2026-04-04T20:17:13.806Z GET /me - User: guest - IP: ::1",
    "2026-04-04T20:21:01.138Z POST /login - User: guest - IP: ::1",
@@ -198,5 +193,10 @@
    "2026-04-07T17:47:27.569Z GET /me - User: guest - IP: ::1",
    "2026-04-07T17:47:31.901Z POST /login - User: guest - IP: ::1",
    "2026-04-07T17:47:32.186Z GET /data - User: user_1774458964087 - IP: ::1",
-   "2026-04-07T17:47:41.641Z POST /logout - User: user_1774458964087 - IP: ::1"
+   "2026-04-07T17:47:41.641Z POST /logout - User: user_1774458964087 - IP: ::1",
+   "2026-05-08T17:10:39.551Z GET /favicon.ico - User: guest - IP: ::1",
+   "2026-05-08T17:10:45.653Z POST /login - User: guest - IP: ::1",
+   "2026-05-08T17:10:45.957Z GET /data - User: user_1774458964087 - IP: ::1",
+   "2026-05-08T17:11:14.772Z GET /me - User: user_1774458964087 - IP: ::1",
+   "2026-05-08T17:11:14.778Z GET /data - User: user_1774458964087 - IP: ::1"
 ]
