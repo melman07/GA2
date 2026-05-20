@@ -39,6 +39,7 @@ function App(){
                 </div>
             ):(
                 <div>
+                <ProfilePictureUpload user={user} onUploaded={(path) => console.log(path)} />
                 <CreateProduct setProds = {setProds}></CreateProduct>
                 <Products prods = {prods} setProds = {setProds} user = {user}></Products>
                 </div>
@@ -84,6 +85,54 @@ function Header({user,setUser}){
         </header>
     )
 };
+
+function ProfilePictureUpload({user,onUploaded}){
+    const [file,setFile] = React.useState(null);
+    const [message, setMessage] = React.useState("");
+
+    async function handleSubmit(event){
+        event.preventDefault();
+        if (!file){
+            setMessage("Choose a photo first");
+            return;
+        }
+        const formData = new FormData();
+        formData.append("photo", file);
+
+        try{
+            const res = await fetch("/upload",{
+                method: "POST",
+                body: formData,
+                credentials: "include"
+            });
+            const data = await res.json();
+
+            if (!res.ok){
+                setMessage(data.message || "Upload failed");
+                return
+            }
+            setMessage("Upload successful!");
+            onUploaded?.(data.file.path);
+        } catch(err){
+            console.error("Upload error", err);
+            setMessage("Upload error");
+        }
+    }
+    return(
+        <div className="profile-upload">
+      <h3>Upload profile picture</h3>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setFile(e.target.files?.[0] || null)}
+        />
+        <button type="submit">Upload</button>
+      </form>
+      {message && <p>{message}</p>}
+    </div>
+    );
+}
 
 
 function Register(){

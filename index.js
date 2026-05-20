@@ -32,6 +32,7 @@ app.get("/logs", async (req,res)=>{
 })
 
 app.use(express.static("public"));
+app.use("/photos", express.static("files/photos"));
 
 app.use(session({
   secret: 'keyboard cat',
@@ -46,6 +47,22 @@ app.use(logger)
 app.get("/data", auth, async(req, res)=>{
     res.json(await getData("data.json"))
 })
+
+app.post("/upload", auth, upload.single("photo"),(req,res)=>{
+    if (!req.file){
+        return res.status(400).json({success:false,message:"No file uploaded"});
+    }
+    res.status(201).json({
+        success: true,
+        message: "File uploaded",
+        file: {
+            originalname: req.file.originalname,
+            filename: req.file.filename,
+            path: `/photos/${req.file.filename}`,
+            size: req.file.size
+        }
+    });
+});
 
 app.get("/session", (req,res)=>{
 
