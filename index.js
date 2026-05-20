@@ -3,6 +3,19 @@ const {getData, saveData, auth, owner, logger} = require("./functions")
 const session = require("express-session")
 const bcrypt = require("bcryptjs")
 const app = express();
+const multer = require("multer")
+
+const storage = multer.diskStorage({
+    destination: ((req,file,cb)=>{
+        cb(null, "files/photos/");
+    }),
+    filename: ((req,file,cb)=>{
+        const uniqueSuffix = Date.now()+"-"+file.originalname;
+        cb(null, uniqueSuffix);
+    })
+});
+
+const upload = multer({ storage:storage});
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
